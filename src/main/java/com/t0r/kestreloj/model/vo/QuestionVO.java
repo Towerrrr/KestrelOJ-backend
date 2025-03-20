@@ -129,6 +129,5 @@ public class QuestionVO implements Serializable {
         return questionVO;
     }
 
-    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

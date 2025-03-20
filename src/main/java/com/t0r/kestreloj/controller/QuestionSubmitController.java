@@ -4,7 +4,7 @@ import com.t0r.kestreloj.common.BaseResponse;
 import com.t0r.kestreloj.common.ErrorCode;
 import com.t0r.kestreloj.common.ResultUtils;
 import com.t0r.kestreloj.exception.BusinessException;
-import com.t0r.kestreloj.model.dto.postthumb.QuestionSubmitAddRequest;
+import com.t0r.kestreloj.model.dto.questionsubmit.QuestionSubmitAddRequest;
 import com.t0r.kestreloj.model.entity.User;
 import com.t0r.kestreloj.service.QuestionSubmitService;
 import com.t0r.kestreloj.service.UserService;
@@ -32,23 +32,22 @@ public class QuestionSubmitController {
     private UserService userService;
 
     /**
-     * 点赞 / 取消点赞
+     * 提交题目
      *
      * @param questionSubmitAddRequest
      * @param request
-     * @return resultNum 本次点赞变化数
+     * @return 提交的记录 id
      */
     @PostMapping("/")
-    public BaseResponse<Integer> doThumb(@RequestBody QuestionSubmitAddRequest questionSubmitAddRequest,
+    public BaseResponse<Long> doQuestionSubmit(@RequestBody QuestionSubmitAddRequest questionSubmitAddRequest,
             HttpServletRequest request) {
-        if (questionSubmitAddRequest == null || questionSubmitAddRequest.getPostId() <= 0) {
+        if (questionSubmitAddRequest == null || questionSubmitAddRequest.getQuestionId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         // 登录才能点赞
         final User loginUser = userService.getLoginUser(request);
-        long postId = questionSubmitAddRequest.getPostId();
-        int result = questionSubmitService.doQuestionSubmit(postId, loginUser);
-        return ResultUtils.success(result);
+        long questionSubmitId = questionSubmitService.doQuestionSubmit(questionSubmitAddRequest, loginUser);
+        return ResultUtils.success(questionSubmitId);
     }
 
 }

@@ -49,6 +49,5 @@ public class QuestionQueryRequest extends PageRequest implements Serializable {
      */
     private Long userId;
 
-    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

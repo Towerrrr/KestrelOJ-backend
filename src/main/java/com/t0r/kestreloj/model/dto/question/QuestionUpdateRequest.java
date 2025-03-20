@@ -51,6 +51,5 @@ public class QuestionUpdateRequest implements Serializable {
      */
     private List<JudgeConfig> judgeConfig;
 
-    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }
