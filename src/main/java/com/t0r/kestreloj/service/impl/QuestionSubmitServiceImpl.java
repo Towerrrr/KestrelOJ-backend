@@ -7,6 +7,8 @@ import com.t0r.kestreloj.model.dto.questionsubmit.QuestionSubmitAddRequest;
 import com.t0r.kestreloj.model.entity.Question;
 import com.t0r.kestreloj.model.entity.QuestionSubmit;
 import com.t0r.kestreloj.model.entity.User;
+import com.t0r.kestreloj.model.enums.QuestionSubmitLanguageEnum;
+import com.t0r.kestreloj.model.enums.QuestionSubmitStatusEnum;
 import com.t0r.kestreloj.service.QuestionService;
 import com.t0r.kestreloj.service.QuestionSubmitService;
 import com.t0r.kestreloj.mapper.QuestionSubmitMapper;
@@ -35,9 +37,14 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
      */
     @Override
     public long doQuestionSubmit(QuestionSubmitAddRequest questionSubmitAddRequest, User loginUser) {
-        Long questionId = questionSubmitAddRequest.getQuestionId();
-        // todo 编程语言是否合法
+        // 编程语言是否合法
+        String language = questionSubmitAddRequest.getLanguage();
+        QuestionSubmitLanguageEnum languageEnum = QuestionSubmitLanguageEnum.getEnumByValue(language);
+        if (languageEnum == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "语言不合法");
+        }
 
+        long questionId = questionSubmitAddRequest.getQuestionId();
         // 判断实体是否存在，根据类别获取实体
         Question question = questionService.getById(questionId);
         if (question == null) {
@@ -50,10 +57,10 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         questionSubmit.setQuestionId(questionId);
         questionSubmit.setUserId(userId);
         questionSubmit.setCode(questionSubmitAddRequest.getCode());
-        questionSubmit.setLanguage(questionSubmitAddRequest.getLanguage());
+        questionSubmit.setLanguage(language);
 
-        // todo 设置初始状态
-        questionSubmit.setStatus(0);
+        // 设置初始状态
+        questionSubmit.setStatus(QuestionSubmitStatusEnum.WAITING.getValue());
         questionSubmit.setJudgeInfo("{}");
 
         boolean save = this.save(questionSubmit);

@@ -2,6 +2,7 @@ package com.t0r.kestreloj.controller;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.gson.Gson;
 import com.t0r.kestreloj.annotation.AuthCheck;
 import com.t0r.kestreloj.common.BaseResponse;
 import com.t0r.kestreloj.common.DeleteRequest;
@@ -10,10 +11,7 @@ import com.t0r.kestreloj.common.ResultUtils;
 import com.t0r.kestreloj.constant.UserConstant;
 import com.t0r.kestreloj.exception.BusinessException;
 import com.t0r.kestreloj.exception.ThrowUtils;
-import com.t0r.kestreloj.model.dto.question.QuestionAddRequest;
-import com.t0r.kestreloj.model.dto.question.QuestionEditRequest;
-import com.t0r.kestreloj.model.dto.question.QuestionQueryRequest;
-import com.t0r.kestreloj.model.dto.question.QuestionUpdateRequest;
+import com.t0r.kestreloj.model.dto.question.*;
 import com.t0r.kestreloj.model.entity.Question;
 import com.t0r.kestreloj.model.entity.User;
 import com.t0r.kestreloj.model.vo.QuestionVO;
@@ -55,12 +53,22 @@ public class QuestionController {
         if (questionAddRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
+
         Question question = new Question();
         BeanUtils.copyProperties(questionAddRequest, question);
         List<String> tags = questionAddRequest.getTags();
         if (tags != null) {
             question.setTags(JSONUtil.toJsonStr(tags));
         }
+        List<JudgeCase> judgeCase = questionAddRequest.getJudgeCase();
+        if (judgeCase != null) {
+            question.setJudgeCase(JSONUtil.toJsonStr(judgeCase));
+        }
+        List<JudgeConfig> judgeConfig = questionAddRequest.getJudgeConfig();
+        if (judgeConfig != null) {
+            question.setJudgeConfig(JSONUtil.toJsonStr(judgeConfig));
+        }
+
         questionService.validQuestion(question, true);
         User loginUser = userService.getLoginUser(request);
         question.setUserId(loginUser.getId());
@@ -114,6 +122,14 @@ public class QuestionController {
         List<String> tags = questionUpdateRequest.getTags();
         if (tags != null) {
             question.setTags(JSONUtil.toJsonStr(tags));
+        }
+        List<JudgeCase> judgeCase = questionUpdateRequest.getJudgeCase();
+        if (judgeCase != null) {
+            question.setJudgeCase(JSONUtil.toJsonStr(judgeCase));
+        }
+        List<JudgeConfig> judgeConfig = questionUpdateRequest.getJudgeConfig();
+        if (judgeConfig != null) {
+            question.setJudgeConfig(JSONUtil.toJsonStr(judgeConfig));
         }
         // 参数校验
         questionService.validQuestion(question, false);
@@ -221,6 +237,14 @@ public class QuestionController {
         List<String> tags = questionEditRequest.getTags();
         if (tags != null) {
             question.setTags(JSONUtil.toJsonStr(tags));
+        }
+        List<JudgeCase> judgeCase = questionEditRequest.getJudgeCase();
+        if (judgeCase != null) {
+            question.setJudgeCase(JSONUtil.toJsonStr(judgeCase));
+        }
+        List<JudgeConfig> judgeConfig = questionEditRequest.getJudgeConfig();
+        if (judgeConfig != null) {
+            question.setJudgeConfig(JSONUtil.toJsonStr(judgeConfig));
         }
         // 参数校验
         questionService.validQuestion(question, false);
