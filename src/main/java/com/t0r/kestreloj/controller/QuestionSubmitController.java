@@ -1,11 +1,15 @@
 package com.t0r.kestreloj.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.t0r.kestreloj.common.BaseResponse;
 import com.t0r.kestreloj.common.ErrorCode;
 import com.t0r.kestreloj.common.ResultUtils;
 import com.t0r.kestreloj.exception.BusinessException;
 import com.t0r.kestreloj.model.dto.questionsubmit.QuestionSubmitAddRequest;
+import com.t0r.kestreloj.model.dto.questionsubmit.QuestionSubmitQueryRequest;
+import com.t0r.kestreloj.model.entity.QuestionSubmit;
 import com.t0r.kestreloj.model.entity.User;
+import com.t0r.kestreloj.model.vo.QuestionSubmitVO;
 import com.t0r.kestreloj.service.QuestionSubmitService;
 import com.t0r.kestreloj.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +52,26 @@ public class QuestionSubmitController {
         final User loginUser = userService.getLoginUser(request);
         long questionSubmitId = questionSubmitService.doQuestionSubmit(questionSubmitAddRequest, loginUser);
         return ResultUtils.success(questionSubmitId);
+    }
+
+    /**
+     * 分页获取题目提交列表（除管理员外，普通用户只能看到非答案、提交代码等公开信息）
+     *
+     * @param questionSubmitQueryRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/list/page")
+    public BaseResponse<Page<QuestionSubmitVO>> listQuestionSubmitByPage(@RequestBody QuestionSubmitQueryRequest questionSubmitQueryRequest,
+                                                                         HttpServletRequest request) {
+        long current = questionSubmitQueryRequest.getCurrent();
+        long size = questionSubmitQueryRequest.getPageSize();
+        // 从数据库中查询原始的题目提交分页信息
+        Page<QuestionSubmit> questionSubmitPage = questionSubmitService.page(new Page<>(current, size),
+                questionSubmitService.getQueryWrapper(questionSubmitQueryRequest));
+        User loginUser = userService.getLoginUser(request);
+        // 返回脱敏信息
+        return ResultUtils.success(questionSubmitService.getQuestionSubmitVOPage(questionSubmitPage, loginUser));
     }
 
 }
