@@ -1,4 +1,4 @@
-package com.t0r.kestreloj.model.dto.questionsubmit;
+package com.t0r.kestreloj.judge.codesandbox.model;
 
 import lombok.Data;
 

@@ -4,7 +4,7 @@ import com.t0r.kestreloj.judge.strategy.DefaultJudgeStrategy;
 import com.t0r.kestreloj.judge.strategy.JavaLanguageJudgeStrategy;
 import com.t0r.kestreloj.judge.strategy.JudgeContext;
 import com.t0r.kestreloj.judge.strategy.JudgeStrategy;
-import com.t0r.kestreloj.model.dto.questionsubmit.JudgeInfo;
+import com.t0r.kestreloj.judge.codesandbox.model.JudgeInfo;
 import com.t0r.kestreloj.model.entity.QuestionSubmit;
 import org.springframework.stereotype.Service;
 

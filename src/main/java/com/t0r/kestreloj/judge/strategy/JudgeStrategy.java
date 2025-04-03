@@ -1,6 +1,6 @@
 package com.t0r.kestreloj.judge.strategy;
 
-import com.t0r.kestreloj.model.dto.questionsubmit.JudgeInfo;
+import com.t0r.kestreloj.judge.codesandbox.model.JudgeInfo;
 
 /**
  * 判题策略

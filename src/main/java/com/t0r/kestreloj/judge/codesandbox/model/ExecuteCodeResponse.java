@@ -1,6 +1,5 @@
 package com.t0r.kestreloj.judge.codesandbox.model;
 
-import com.t0r.kestreloj.model.dto.questionsubmit.JudgeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

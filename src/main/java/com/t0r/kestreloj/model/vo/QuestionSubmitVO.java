@@ -2,7 +2,7 @@ package com.t0r.kestreloj.model.vo;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.t0r.kestreloj.model.dto.questionsubmit.JudgeInfo;
+import com.t0r.kestreloj.judge.codesandbox.model.JudgeInfo;
 import com.t0r.kestreloj.model.entity.QuestionSubmit;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;

@@ -3,7 +3,7 @@ package com.t0r.kestreloj.judge.codesandbox.impl;
 import com.t0r.kestreloj.judge.codesandbox.CodeSandbox;
 import com.t0r.kestreloj.judge.codesandbox.model.ExecuteCodeRequest;
 import com.t0r.kestreloj.judge.codesandbox.model.ExecuteCodeResponse;
-import com.t0r.kestreloj.model.dto.questionsubmit.JudgeInfo;
+import com.t0r.kestreloj.judge.codesandbox.model.JudgeInfo;
 import com.t0r.kestreloj.model.enums.JudgeInfoMessageEnum;
 import com.t0r.kestreloj.model.enums.QuestionSubmitStatusEnum;
 

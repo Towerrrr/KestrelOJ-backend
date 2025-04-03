@@ -3,7 +3,7 @@ package com.t0r.kestreloj.judge.strategy;
 import cn.hutool.json.JSONUtil;
 import com.t0r.kestreloj.model.dto.question.JudgeCase;
 import com.t0r.kestreloj.model.dto.question.JudgeConfig;
-import com.t0r.kestreloj.model.dto.questionsubmit.JudgeInfo;
+import com.t0r.kestreloj.judge.codesandbox.model.JudgeInfo;
 import com.t0r.kestreloj.model.entity.Question;
 import com.t0r.kestreloj.model.enums.JudgeInfoMessageEnum;
 
