@@ -2,7 +2,6 @@ package com.t0r.kestreloj.controller;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.google.gson.Gson;
 import com.t0r.kestreloj.annotation.AuthCheck;
 import com.t0r.kestreloj.common.BaseResponse;
 import com.t0r.kestreloj.common.DeleteRequest;
@@ -72,8 +71,6 @@ public class QuestionController {
         questionService.validQuestion(question, true);
         User loginUser = userService.getLoginUser(request);
         question.setUserId(loginUser.getId());
-        question.setFavourNum(0);
-        question.setThumbNum(0);
         boolean result = questionService.save(question);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         long newQuestionId = question.getId();
